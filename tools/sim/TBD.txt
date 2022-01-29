@@ -1,0 +1,158 @@
+
+
+# start at high speed (npc at high speed)
+
+
+# leading car stop/continue at traffic light (same lane and different lane)
+
+
+# ./CarlaUE4.sh -opengl -nosound -quality-level=Epic
+# ./launch_openpilot.sh
+# ./op_script/bridge_multiple.py
+
+DOCKER_BUILDKIT=1 docker build -f tools/sim/Dockerfile.sim2 .
+
+
+
+# TBD:
+
+# check other cases
+# try larger weights for the fusion objective
+
+
+# openpilot starts in the middle of ego car controlled by traffic manager, use the delay parameter
+
+# analyze extreme cases and tweak threshold for correlation between fusion perc error and fusion bugs
+
+# run fixed end frame number GA with fusion objective
+
+# set up on other machines
+
+# diversity (average speed, collision location/type) for objective and error counting
+
+
+
+
+# diversity measure
+
+# importance sampling MCMC baseline?
+
+# AV fuzzer baseline?
+
+# diversity?
+
+# change path to relative path to prepare for docker image build
+
+
+
+# not cleanup nicely (need to remove all relevant processes when exit)
+
+
+
+# fix sync between tm and op
+
+
+# save other data with separate process as well?
+
+
+
+
+# fix 0.05 version
+
+
+# speed up sim
+
+
+# wait for OP to send control commands (1.may need to decrease frequency of car control to 20Hz as well to ensure determinism of the grabbed control command 2.consider to use SubMaster.update to recv with a timeout blocking time for the latest vehicle control)
+# OP won't send back control command if time does not update
+
+
+# cars driving in opposite direction (and curve lanes) scenario
+# also consider laneless mode as another setting
+
+# use autopilot for initial speed and then engage OP
+# lane change
+
+
+# ***** define fusion error numerically
+# ***** analyze stats of failure scenario (camera error and radar error before accident happens)
+
+# *** fix absolute path issue for portability
+# *** docker
+# implement AVfuzzer
+# check how AVfuzzer avoids repetition from previous found bugs and comapre with it when designing diversity objectiv
+
+
+# speed trajectory and collision categories for bug definition
+# use ttc for responsibility
+# underperformance definition and implementation
+
+
+# implement fusion error counting (first need to settle down objective and need to encode location/speed coverage into objective or create new variable passed to get_unique_bugs)
+
+
+# consider overestimation and underestimation of each field separately to promote severe errors
+# consider lead probability as another smoothing objective to optimize
+
+# comfortable metric, can also use route completion within certain time limit (assuming not blocking) to evaluate
+
+# add vehicle color as searchable field
+
+
+# define unique bug metric
+
+
+
+
+
+# ***create other accident scenarios
+
+# add visualization icon to front image for illustration purpose
+# design and try fuzzing
+
+
+
+
+
+
+# adjust comfortable metric according to observation
+
+
+# record camera and radar deviation for each case (when leading object is within certain range) for potential objectives
+
+
+# speed trajectory? deviation trajectory visualization?
+
+# rerun found bugs to check if it is caused by fusion
+
+# support non dask implementation
+
+
+# -13.initial speed (on a long straught road, don't count collision before OP is engaged)
+
+# consider distance fov into objective to use instance where a collision happens although the responsibility barely lies on another NPC.
+
+# account for responsibility in bug count and objecctive design (in a continuous form)
+
+# test bug transferability
+
+
+
+# -12.comfortable metric / literature?
+# -11.8 main objectives
+# -11.7 scenario / search space
+
+
+# -11.5 three leading vehicle same lane, closest two departure
+# -11.diversity in objective
+# -10.handle lane departure
+# -9.multiple instances
+# -8.avfuzzer
+
+
+# -4.check out sync issue
+
+# -1.get AutoFuzz + OP setup on desktop
+# 1.design loss based on intermediate variables trajectory data
+# 1.5 comfortable violation
+# 2.support multiple instances (especially OP)
